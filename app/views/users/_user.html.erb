@@ -1,0 +1,13 @@
+<div id="<%= dom_id user %>">
+  <p>
+    <strong>Name:</strong>
+    <%= user.name %>
+  </p>
+
+  <p>
+    <strong>Avatar:</strong>
+    <%= link_to user.avatar.filename, user.avatar if user.avatar.attached? %>
+    <%= image_tag user.avatar.representation(resize_to_limit: [100, 100]) %>
+  </p>
+
+</div>

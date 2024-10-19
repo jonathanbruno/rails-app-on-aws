@@ -67,3 +67,31 @@ yarn-debug.log*
 /storage/*
 !/storage/.keep
 /public/uploads
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+# Local .terraform directories
+**/.terraform/*
+!.terraform/modules/
+
+
+# Terraform crash log files
+crash.log
+
+# Terraform variable overrides
+*.tfvars
+*.tfvars.json
+
+# Terraform plan files (binary or JSON)
+*.tfplan
+*.tfplan.json
+
+# Sensitive files
+*.tfstate
+*.tfstate.backup
+*.tfstate.*
+*.tfstate.*.backup
+
+# Files created by Terraform providers
+.terraform.lock.hcl
