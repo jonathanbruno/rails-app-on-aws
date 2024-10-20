@@ -21,8 +21,9 @@ RUN apt-get update && apt-get install -qq -y --no-install-recommends \
 WORKDIR /app
 
 # Set environment to production
-#ENV RAILS_ENV=production
-#ENV RAILS_LOG_TO_STDOUT=true
+ENV RAILS_ENV=production
+ENV RAILS_LOG_TO_STDOUT=true
+ENV RAILS_SERVE_STATIC_FILES=TRUE
 
 # Copy the Gemfile and Gemfile.lock into the container
 COPY Gemfile Gemfile.lock ./
@@ -36,10 +37,10 @@ COPY . .
 # Precompile assets for production
 RUN bundle exec rake assets:precompile
 
-
 # Expose port 3000 for the Rails app
 EXPOSE 3000
 
+RUN rails db:migrate
 # Start the Rails server
-CMD ["rails", "server", "-b", "0.0.0.0"]
-#CMD ["rails", "server", "-e", "production", "-b", "0.0.0.0"]
+#CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["rails", "server", "-e", "production", "-b", "0.0.0.0"]
