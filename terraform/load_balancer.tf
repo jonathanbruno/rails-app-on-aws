@@ -17,7 +17,7 @@ resource "aws_lb" "jb-load-balancer" {
 
 resource "aws_lb_target_group" "jb-target-group" {
   name     = "jb-target-group"
-  port     = 80
+  port     = 3000
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
 }
@@ -39,5 +39,5 @@ resource "aws_lb_listener" "jb-listener" {
 resource "aws_lb_target_group_attachment" "test" {
   target_group_arn = aws_lb_target_group.jb-target-group.arn
   target_id        = aws_instance.application.id
-  port             = 80
+  port             = 3000
 }
