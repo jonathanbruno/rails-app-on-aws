@@ -153,8 +153,8 @@ resource "aws_security_group_rule" "sg-public-traffic-ingress-rule-a" {
 
 resource "aws_security_group_rule" "sg-public-traffic-egress-rule-a" {
   type              = "egress"
-  from_port         = 80
-  to_port           = 80
+  from_port         = 3000
+  to_port           = 3000
   protocol          = "tcp"                # Allowing all protocols, you can specify if needed
   security_group_id = aws_security_group.sg-public-traffic.id
   source_security_group_id = aws_security_group.sg-private-application.id
@@ -163,14 +163,13 @@ resource "aws_security_group_rule" "sg-public-traffic-egress-rule-a" {
 
 resource "aws_security_group_rule" "sg-private-application-ingress-rule-a" {
   type              = "ingress"
-  from_port         = 80
-  to_port           = 80
+  from_port         = 3000
+  to_port           = 3000
   protocol          = "tcp"                # Allowing all protocols, you can specify if needed
   security_group_id = aws_security_group.sg-private-application.id
   source_security_group_id = aws_security_group.sg-public-traffic.id
   description       = "Allow inbound traffic from public security group"
 }
-
 
 resource "aws_security_group_rule" "sg-private-application-ingress-rule-b" {
   type              = "ingress"

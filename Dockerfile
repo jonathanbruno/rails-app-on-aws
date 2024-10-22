@@ -23,7 +23,7 @@ WORKDIR /app
 # Set environment to production
 ENV RAILS_ENV=production
 ENV RAILS_LOG_TO_STDOUT=true
-ENV RAILS_SERVE_STATIC_FILES=TRUE
+# ENV RAILS_SERVE_STATIC_FILES=TRUE
 
 # Copy the Gemfile and Gemfile.lock into the container
 COPY Gemfile Gemfile.lock ./
