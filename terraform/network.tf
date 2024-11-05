@@ -104,7 +104,7 @@ resource "aws_route_table" "private_route_to_nat_gateway" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.nat_gateway.id
+    nat_gateway_id = aws_nat_gateway.nat_gateway.id
   }
 
   tags = {
@@ -144,8 +144,8 @@ resource "aws_security_group" "sg-private-application" {
 
 resource "aws_security_group_rule" "sg-public-traffic-ingress-rule-a" {
   type              = "ingress"
-  from_port         = 80
-  to_port           = 80
+  from_port         = 443
+  to_port           = 443
   protocol          = "tcp"                # Allowing all protocols, you can specify if needed
   security_group_id = aws_security_group.sg-public-traffic.id
   cidr_blocks = ["0.0.0.0/0"]
@@ -165,16 +165,6 @@ resource "aws_security_group_rule" "sg-private-application-ingress-rule-a" {
   type              = "ingress"
   from_port         = 3000
   to_port           = 3000
-  protocol          = "tcp"                # Allowing all protocols, you can specify if needed
-  security_group_id = aws_security_group.sg-private-application.id
-  source_security_group_id = aws_security_group.sg-public-traffic.id
-  description       = "Allow inbound traffic from public security group"
-}
-
-resource "aws_security_group_rule" "sg-private-application-ingress-rule-b" {
-  type              = "ingress"
-  from_port         = 443
-  to_port           = 443
   protocol          = "tcp"                # Allowing all protocols, you can specify if needed
   security_group_id = aws_security_group.sg-private-application.id
   source_security_group_id = aws_security_group.sg-public-traffic.id

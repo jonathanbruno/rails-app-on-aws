@@ -23,6 +23,7 @@ WORKDIR /app
 # Set environment to production
 ENV RAILS_ENV=production
 ENV RAILS_LOG_TO_STDOUT=true
+ENV CLOUD_FRONT_PREFIX=dk2wankj1lq5y
 # ENV RAILS_SERVE_STATIC_FILES=TRUE
 
 # Copy the Gemfile and Gemfile.lock into the container

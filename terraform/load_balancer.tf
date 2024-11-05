@@ -33,10 +33,10 @@ resource "aws_lb_target_group" "jb-target-group" {
 
 resource "aws_lb_listener" "jb-listener" {
   load_balancer_arn = aws_lb.jb-load-balancer.arn
-  port              = "80"
-  protocol          = "HTTP"
+  port              = "443"
+  protocol          = "HTTPS"
   #ssl_policy        = "ELBSecurityPolicy-2016-08"
-  #certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+  certificate_arn   = "arn:aws:acm:us-east-2:443370703773:certificate/62018e50-df72-49a3-be5f-40375d5afa46"
 
   default_action {
     type             = "forward"
@@ -44,7 +44,7 @@ resource "aws_lb_listener" "jb-listener" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "test" {
+resource "aws_lb_target_group_attachment" "lb_target_group_attachment" {
   target_group_arn = aws_lb_target_group.jb-target-group.arn
   target_id        = aws_instance.application.id
   port             = 3000
