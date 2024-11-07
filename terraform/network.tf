@@ -7,8 +7,8 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "public_subnet-a" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.1.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.1.0/24"
   availability_zone = "us-east-2a"
 
   tags = {
@@ -17,8 +17,8 @@ resource "aws_subnet" "public_subnet-a" {
 }
 
 resource "aws_subnet" "public_subnet-b" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.2.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.2.0/24"
   availability_zone = "us-east-2b"
 
   tags = {
@@ -28,8 +28,8 @@ resource "aws_subnet" "public_subnet-b" {
 
 
 resource "aws_subnet" "private_subnet-a" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.3.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.3.0/24"
   availability_zone = "us-east-2a"
 
   tags = {
@@ -38,8 +38,8 @@ resource "aws_subnet" "private_subnet-a" {
 }
 
 resource "aws_subnet" "private_subnet-b" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.4.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.4.0/24"
   availability_zone = "us-east-2b"
 
   tags = {
@@ -79,7 +79,7 @@ resource "aws_route_table_association" "rta_public_subnet_b" {
 }
 
 resource "aws_eip" "nat_eip" {
-  domain   = "vpc"
+  domain = "vpc"
 
   depends_on = [
     aws_internet_gateway.igw
@@ -91,7 +91,7 @@ resource "aws_eip" "nat_eip" {
 }
 
 resource "aws_nat_gateway" "nat_gateway" {
-  subnet_id = aws_subnet.public_subnet-a.id
+  subnet_id     = aws_subnet.public_subnet-a.id
   allocation_id = aws_eip.nat_eip.id
 
   tags = {
@@ -103,7 +103,7 @@ resource "aws_route_table" "private_route_to_nat_gateway" {
   vpc_id = aws_vpc.main.id
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.nat_gateway.id
   }
 
@@ -146,46 +146,46 @@ resource "aws_security_group_rule" "sg-public-traffic-ingress-rule-a" {
   type              = "ingress"
   from_port         = 443
   to_port           = 443
-  protocol          = "tcp"                # Allowing all protocols, you can specify if needed
+  protocol          = "tcp" # Allowing all protocols, you can specify if needed
   security_group_id = aws_security_group.sg-public-traffic.id
-  cidr_blocks = ["0.0.0.0/0"]
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "sg-public-traffic-ingress-rule-b" {
   type              = "ingress"
   from_port         = 80
   to_port           = 80
-  protocol          = "tcp"                # Allowing all protocols, you can specify if needed
+  protocol          = "tcp" # Allowing all protocols, you can specify if needed
   security_group_id = aws_security_group.sg-public-traffic.id
-  cidr_blocks = ["0.0.0.0/0"]
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "sg-public-traffic-egress-rule-a" {
-  type              = "egress"
-  from_port         = 3000
-  to_port           = 3000
-  protocol          = "tcp"                # Allowing all protocols, you can specify if needed
-  security_group_id = aws_security_group.sg-public-traffic.id
+  type                     = "egress"
+  from_port                = 3000
+  to_port                  = 3000
+  protocol                 = "tcp" # Allowing all protocols, you can specify if needed
+  security_group_id        = aws_security_group.sg-public-traffic.id
   source_security_group_id = aws_security_group.sg-private-application.id
-  description       = "Allow outbound traffic to private security group"
+  description              = "Allow outbound traffic to private security group"
 }
 
 resource "aws_security_group_rule" "sg-private-application-ingress-rule-a" {
-  type              = "ingress"
-  from_port         = 3000
-  to_port           = 3000
-  protocol          = "tcp"                # Allowing all protocols, you can specify if needed
-  security_group_id = aws_security_group.sg-private-application.id
+  type                     = "ingress"
+  from_port                = 3000
+  to_port                  = 3000
+  protocol                 = "tcp" # Allowing all protocols, you can specify if needed
+  security_group_id        = aws_security_group.sg-private-application.id
   source_security_group_id = aws_security_group.sg-public-traffic.id
-  description       = "Allow inbound traffic from public security group"
+  description              = "Allow inbound traffic from public security group"
 }
 
 resource "aws_security_group_rule" "sg-private-application-egress-rule-a" {
   type              = "egress"
   from_port         = 443
   to_port           = 443
-  protocol          = "tcp"                # Allowing all protocols, you can specify if needed
+  protocol          = "tcp" # Allowing all protocols, you can specify if needed
   security_group_id = aws_security_group.sg-private-application.id
-  cidr_blocks = ["0.0.0.0/0"]
+  cidr_blocks       = ["0.0.0.0/0"]
   description       = "Allow outbound traffic to the internet"
 }

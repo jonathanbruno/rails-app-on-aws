@@ -3,7 +3,7 @@ resource "aws_lb" "jb-load-balancer" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.sg-public-traffic.id]
-  subnets            = [
+  subnets = [
     aws_subnet.public_subnet-a.id,
     aws_subnet.public_subnet-b.id
   ]
@@ -35,7 +35,7 @@ resource "aws_lb_listener" "jb-listener-https" {
   port              = "443"
   protocol          = "HTTPS"
   #ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = "arn:aws:acm:us-east-2:443370703773:certificate/62018e50-df72-49a3-be5f-40375d5afa46"
+  certificate_arn = "arn:aws:acm:us-east-2:443370703773:certificate/62018e50-df72-49a3-be5f-40375d5afa46"
 
   default_action {
     type             = "forward"
