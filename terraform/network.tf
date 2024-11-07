@@ -151,6 +151,15 @@ resource "aws_security_group_rule" "sg-public-traffic-ingress-rule-a" {
   cidr_blocks = ["0.0.0.0/0"]
 }
 
+resource "aws_security_group_rule" "sg-public-traffic-ingress-rule-b" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"                # Allowing all protocols, you can specify if needed
+  security_group_id = aws_security_group.sg-public-traffic.id
+  cidr_blocks = ["0.0.0.0/0"]
+}
+
 resource "aws_security_group_rule" "sg-public-traffic-egress-rule-a" {
   type              = "egress"
   from_port         = 3000

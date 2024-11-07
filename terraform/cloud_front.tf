@@ -6,7 +6,7 @@ resource "aws_cloudfront_distribution" "jb-cloudlfront-distribution" {
     custom_origin_config {
       http_port              = 80
       https_port             = 443
-      origin_protocol_policy = "http-only"  # Choose http-only, https-only, or match-viewer
+      origin_protocol_policy = "https-only"  # Choose http-only, https-only, or match-viewer
       origin_ssl_protocols   = ["TLSv1.2"]  # Required if using https
     }
   }
@@ -14,7 +14,7 @@ resource "aws_cloudfront_distribution" "jb-cloudlfront-distribution" {
   enabled             = true
   comment             = "Cloudfront distribution for static site"
   default_root_object = ""
-  #aliases             = [var.blog_domain]
+  aliases             = ["app.jonathanbruno.dev"]
 
   restrictions {
     geo_restriction {
@@ -23,7 +23,9 @@ resource "aws_cloudfront_distribution" "jb-cloudlfront-distribution" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    # cloudfront_default_certificate = true
+    acm_certificate_arn = "arn:aws:acm:us-east-1:443370703773:certificate/edccd4fc-b2c1-447e-a026-141245696feb"
+    ssl_support_method = "sni-only"
   }
 
   default_cache_behavior {

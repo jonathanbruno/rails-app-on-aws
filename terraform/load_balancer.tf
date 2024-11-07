@@ -30,8 +30,7 @@ resource "aws_lb_target_group" "jb-target-group" {
   ]
 }
 
-
-resource "aws_lb_listener" "jb-listener" {
+resource "aws_lb_listener" "jb-listener-https" {
   load_balancer_arn = aws_lb.jb-load-balancer.arn
   port              = "443"
   protocol          = "HTTPS"
@@ -41,6 +40,22 @@ resource "aws_lb_listener" "jb-listener" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.jb-target-group.arn
+  }
+}
+
+resource "aws_lb_listener" "jb-listener-http" {
+  load_balancer_arn = aws_lb.jb-load-balancer.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 }
 
