@@ -35,6 +35,11 @@ RUN bundle install
 # Copy the entire app into the container
 COPY . .
 
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
+ARG FOG_DIRECTORY
+ARG AWS_REGION
+
 # Precompile assets for production
 RUN bundle exec rake assets:precompile
 
