@@ -12,4 +12,4 @@ sudo chmod 666 /var/run/docker.sock
 
 sudo docker pull
 
-sudo docker run -d -p 3000:3000 -e CLOUD_FRONT_PREFIX=d1dmg849o3kvm6 --pull always jonathanbruno/rails-aws-app
+sudo docker run -d -p 3000:3000 -e CLOUD_FRONT_PREFIX=d1oc2rdlqu3gno --pull always jonathanbruno/rails-aws-app
