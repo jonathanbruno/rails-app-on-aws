@@ -1,4 +1,3 @@
-
 resource "aws_s3_bucket" "assets_bucket" {
   bucket = "jb-terraform-assets"
 
@@ -62,4 +61,15 @@ resource "aws_s3_bucket_cors_configuration" "assets_bucket_cors" {
     expose_headers  = ["ETag"]
     max_age_seconds = 3000
   }
+}
+
+resource "aws_s3_bucket" "images_bucket" {
+  bucket = "jb-terraform-images"
+
+  tags = {
+    Name        = "Images bucket"
+    Environment = "Dev"
+  }
+
+  force_destroy = true
 }

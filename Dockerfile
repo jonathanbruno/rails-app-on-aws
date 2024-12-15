@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -qq -y --no-install-recommends \
     libdrm2 libgbm1 libgtk-3-0 \
     libnspr4 libnss3 libxcomposite1 libxdamage1 \
     libxfixes3 libxkbcommon0 libxrandr2 xdg-utils \
-    libjemalloc2 && rm -rf /var/lib/apt/lists/* 
+    libjemalloc2 && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory inside the container
 WORKDIR /app
